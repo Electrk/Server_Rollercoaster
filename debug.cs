@@ -21,6 +21,8 @@ function Rollercoaster::drawDebugLine ( %this, %fromNode, %toNode )
 			%fromNode.debugLine.delete ();
 		}
 
+		%line.isRollercoasterLine = true;
+
 		%fromNode.debugLine = %line;
 		%this.debugObjects.add (%line);
 	}
@@ -35,7 +37,7 @@ function Rollercoaster::drawDebugNode ( %this, %node )
 
 	if ( $Rollercoaster::DebugMode )
 	{
-		%size = $Rollercoaster::DebugLineSize * 1.01;
+		%size = $Rollercoaster::DebugLineSize * 1.1;
 
 		%fromPos = vectorAdd (%node.position, -%size @ " 0 0");
 		%toPos   = vectorAdd (%node.position, %size @ " 0 0");
@@ -46,6 +48,8 @@ function Rollercoaster::drawDebugNode ( %this, %node )
 		{
 			%node.debugNode.delete ();
 		}
+
+		%line.isRollercoasterNode = true;
 
 		%node.debugNode = %line;
 		%this.debugObjects.add (%line);
