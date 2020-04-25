@@ -1,7 +1,7 @@
 $Rollercoaster::Default::NodeType = "Normal";
 $Rollercoaster::Default::NodePath = "Linear";
 
-$Rollercoaster::MaxNodes = 19;
+$Rollercoaster::MaxNodes = 18;
 
 if ( !$Rollercoaster::ClassesInitialized )
 {
@@ -39,9 +39,9 @@ function Rollercoaster::createNode ( %this, %transform, %speed, %type, %path )
 		position = getWords (%transform, 0, 2);
 		rotation = getWords (%transform, 3);
 
-		speed    = defaultValue (%speed, $Rollercoaster::Default::Speed);
-		type     = defaultValue (%type, $Rollercoaster::Default::NodeType);
-		path     = defaultValue (%path, $Rollercoaster::Default::NodePath);
+		speed = defaultValue (%speed, $Rollercoaster::Default::Speed);
+		type  = defaultValue (%type, $Rollercoaster::Default::NodeType);
+		path  = defaultValue (%path, $Rollercoaster::Default::NodePath);
 	};
 
 	%this.nodes.add (%node);
