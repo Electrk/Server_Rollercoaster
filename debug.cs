@@ -21,7 +21,7 @@ function Rollercoaster::drawDebugLine ( %this, %fromNode, %toNode )
 			%fromNode.debugLine.delete ();
 		}
 
-		%line.isRollercoasterLine = true;
+		%line.debugRollercoasterType = "line";
 
 		%fromNode.debugLine = %line;
 		%this.debugObjects.add (%line);
@@ -49,7 +49,7 @@ function Rollercoaster::drawDebugNode ( %this, %node )
 			%node.debugNode.delete ();
 		}
 
-		%line.isRollercoasterNode = true;
+		%line.debugRollercoasterType = "node";
 
 		%node.debugNode = %line;
 		%this.debugObjects.add (%line);
