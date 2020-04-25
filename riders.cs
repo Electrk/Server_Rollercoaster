@@ -5,17 +5,15 @@ function Rollercoaster::addRider ( %this, %client )
 		return false;
 	}
 
-	%cameras = %this.cameras;
-
-	if ( %cameras.getCount () <= 0 )
+	if ( !isObject (%pathCam = %this.pathCam) )
 	{
 		return false;
 	}
 
 	%this.riders.add (%client);
 
-	// FIXME
-	%client.setControlObject (%cameras.getObject (0).pathCam);
+	%client.rollercoasterPrevObj = %client.getControlObject ();
+	%client.setControlObject (%pathCam);
 
 	return true;
 }
@@ -28,7 +26,15 @@ function Rollercoaster::removeRider ( %this, %client )
 	}
 
 	%this.riders.remove (%client);
-	%client.instantRespawn ();
+
+	if ( isObject (%prevObject = %client.rollercoasterPrevObj) )
+	{
+		%client.setControlObject (%prevObject);
+	}
+	else
+	{
+		%client.instantRespawn ();
+	}
 
 	return true;
 }
