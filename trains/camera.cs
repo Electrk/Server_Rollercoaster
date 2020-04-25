@@ -13,6 +13,8 @@ function RollercoasterCamera::onNode ( %data, %this, %node )
 
 	%nodeIndex = %train.currNodeIndex + $Rollercoaster::MaxNodes - 1;
 
+	// PathCameras can only have so many nodes before they start popping nodes from the front,
+	// so we must keep shifting the window.
 	if ( %nodeIndex < %count  &&  %train.currNodeIndex > 0 )
 	{
 		%node = %nodes.getObject (%nodeIndex);

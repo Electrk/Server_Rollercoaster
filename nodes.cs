@@ -86,8 +86,3 @@ function Rollercoaster::pushNode ( %this, %transform, %speed, %type, %path )
 
 	return %node;
 }
-
-function Rollercoaster::setCameraPosition ( %this, %pathCam, %index )
-{
-	// TODO
-}
