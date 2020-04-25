@@ -50,7 +50,7 @@ function Rollercoaster::createNode ( %this, %transform, %speed, %type, %path )
 	return %node;
 }
 
-function Rollercoaster::pushNode ( %this, %transform, %speed )
+function Rollercoaster::pushNode ( %this, %transform, %speed, %type, %path )
 {
 	%overwriteSpeed = %speed !$= "";
 
@@ -69,9 +69,6 @@ function Rollercoaster::pushNode ( %this, %transform, %speed )
 
 	%speed = defaultValue (%speed, %this.initialSpeed);
 
-	%type = $Rollercoaster::Default::NodeType;
-	%path = $Rollercoaster::Default::NodePath;
-
 	if ( %prevPos !$= "" )
 	{
 		%prevZ = getWord (%prevPos, 2);
@@ -81,21 +78,11 @@ function Rollercoaster::pushNode ( %this, %transform, %speed )
 		{
 			%speed += %prevZ - %newZ;
 		}
-
-		if ( %prevZ > %newZ )
-		{
-			%path = "Spline";
-		}
 	}
 
 	%node = %this.createNode (%transform, %speed, %type, %path);
 
 	%this.drawDebugLine (%tail, %node);
 
-	return true;
-}
-
-function Rollercoaster::setPathCamPos ( %this, %index )
-{
-
+	return %node;
 }
