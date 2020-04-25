@@ -11,8 +11,7 @@ if ( !$Rollercoaster::ClassesInitialized )
 function Rollercoaster::onAdd ( %this, %obj )
 {
 	%this.nodes        = new SimSet ();
-	%this.cameras      = new SimSet ();
-	%this.riders       = new SimSet ();
+	%this.trains       = new SimSet ();
 	%this.debugObjects = new SimSet ();
 }
 
@@ -24,18 +23,8 @@ function Rollercoaster::onRemove ( %this, %obj )
 	%this.nodes.deleteAll ();
 	%this.nodes.delete ();
 
-	%this.cameras.deleteAll ();
-	%this.cameras.delete ();
-
-	%riders     = %this.riders;
-	%riderCount = %riders.getCount ();
-
-	for ( %i = 0;  %i < %riderCount;  %i++ )
-	{
-		%riders.getObject (%i).instantRespawn ();
-	}
-
-	%riders.delete ();
+	%this.trains.deleteAll ();
+	%this.trains.delete ();
 }
 
 function Rollercoaster_Create ( %transform, %speed )
