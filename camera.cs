@@ -55,5 +55,13 @@ function Rollercoaster::createCamera ( %this )
 
 	%this.pathCam = %pathCam;
 
+	%riders     = %this.riders;
+	%riderCount = %riders.getCount ();
+
+	for ( %i = 0;  %i < %riderCount;  %i++ )
+	{
+		%riders.getObject (%i).setControlObject (%pathCam);
+	}
+
 	return %pathCam;
 }
