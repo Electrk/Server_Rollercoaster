@@ -16,14 +16,21 @@ function Rollercoaster::drawDebugLine ( %this, %fromNode, %toNode )
 		%line = drawLine (%fromNode.position, %toNode.position, $Rollercoaster::DebugLineColor,
 			$Rollercoaster::DebugLineSize);
 
-		if ( isObject (%fromNode.debugLine) )
+		if ( isObject (%fromNode.debugLineFrom) )
 		{
-			%fromNode.debugLine.delete ();
+			%fromNode.debugLineFrom.delete ();
+		}
+
+		if ( isObject (%toNode.debugLineTo) )
+		{
+			%toNode.debugLineTo.delete ();
 		}
 
 		%line.debugRollercoasterType = "line";
 
-		%fromNode.debugLine = %line;
+		%fromNode.debugLineFrom = %line;
+		%toNode.debugLineTo     = %line;
+
 		%this.debugObjects.add (%line);
 	}
 }

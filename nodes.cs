@@ -19,35 +19,20 @@ function RollercoasterNode::onAdd ( %this, %obj )
 
 function RollercoasterNode::onRemove ( %this, %obj )
 {
-	if ( isObject (%this.debugLine) )
+	if ( isObject (%this.debugLineFrom) )
 	{
-		%this.debugLine.delete ();
+		%this.debugLineFrom.delete ();
+	}
+
+	if ( isObject (%this.debugLineTo) )
+	{
+		%this.debugLineTo.delete ();
 	}
 
 	if ( isObject (%this.debugNode) )
 	{
 		%this.debugNode.delete ();
 	}
-}
-
-function Rollercoaster::createNode ( %this, %transform, %speed, %type, %path )
-{
-	%node = new ScriptObject ()
-	{
-		superClass = RollercoasterNode;
-
-		position = getWords (%transform, 0, 2);
-		rotation = getWords (%transform, 3);
-
-		speed = defaultValue (%speed, $Rollercoaster::Default::Speed);
-		type  = defaultValue (%type, $Rollercoaster::Default::NodeType);
-		path  = defaultValue (%path, $Rollercoaster::Default::NodePath);
-	};
-
-	%this.nodes.add (%node);
-	%this.drawDebugNode (%node);
-
-	return %node;
 }
 
 function Rollercoaster::pushNode ( %this, %transform, %speed, %type, %path )
@@ -80,8 +65,21 @@ function Rollercoaster::pushNode ( %this, %transform, %speed, %type, %path )
 		}
 	}
 
-	%node = %this.createNode (%transform, %speed, %type, %path);
+	%node = new ScriptObject ()
+	{
+		superClass = RollercoasterNode;
 
+		position = getWords (%transform, 0, 2);
+		rotation = getWords (%transform, 3);
+
+		speed = defaultValue (%speed, $Rollercoaster::Default::Speed);
+		type  = defaultValue (%type, $Rollercoaster::Default::NodeType);
+		path  = defaultValue (%path, $Rollercoaster::Default::NodePath);
+	};
+
+	%this.nodes.add (%node);
+
+	%this.drawDebugNode (%node);
 	%this.drawDebugLine (%tail, %node);
 
 	return %node;
