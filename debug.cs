@@ -4,21 +4,21 @@ $Rollercoaster::DebugLineColor   = defaultValue ($Rollercoaster::DebugLineColor,
 $Rollercoaster::DebugVertexColor = defaultValue ($Rollercoaster::DebugVertexColor, "1 1 0 0.5");
 
 
-function Rollercoaster::drawDebugLine ( %this, %fromNode, %toNode )
+function RollercoasterNode::drawDebugLine ( %this, %toNode )
 {
-	if ( !isObject (%fromNode)  ||  !isObject (%toNode) )
+	if ( !isObject (%toNode) )
 	{
 		return;
 	}
 
 	if ( $Rollercoaster::DebugMode )
 	{
-		%line = drawLine (%fromNode.position, %toNode.position, $Rollercoaster::DebugLineColor,
+		%line = drawLine (%this.position, %toNode.position, $Rollercoaster::DebugLineColor,
 			$Rollercoaster::DebugLineSize);
 
-		if ( isObject (%fromNode.debugLineFrom) )
+		if ( isObject (%this.debugLineFrom) )
 		{
-			%fromNode.debugLineFrom.delete ();
+			%this.debugLineFrom.delete ();
 		}
 
 		if ( isObject (%toNode.debugLineTo) )
@@ -28,37 +28,29 @@ function Rollercoaster::drawDebugLine ( %this, %fromNode, %toNode )
 
 		%line.debugRollercoasterType = "line";
 
-		%fromNode.debugLineFrom = %line;
-		%toNode.debugLineTo     = %line;
-
-		%this.debugObjects.add (%line);
+		%this.debugLineFrom = %line;
+		%toNode.debugLineTo = %line;
 	}
 }
 
-function Rollercoaster::drawDebugNode ( %this, %node )
+function RollercoasterNode::drawDebugNode ( %this )
 {
-	if ( !isObject (%node) )
-	{
-		return;
-	}
-
 	if ( $Rollercoaster::DebugMode )
 	{
 		%size = $Rollercoaster::DebugLineSize * 1.1;
 
-		%fromPos = vectorAdd (%node.position, -%size @ " 0 0");
-		%toPos   = vectorAdd (%node.position, %size @ " 0 0");
+		%fromPos = vectorAdd (%this.position, -%size @ " 0 0");
+		%toPos   = vectorAdd (%this.position, %size @ " 0 0");
 
 		%line = drawLine (%fromPos, %toPos, $Rollercoaster::DebugVertexColor, %size);
 
-		if ( isObject (%node.debugNode) )
+		if ( isObject (%this.debugNode) )
 		{
-			%node.debugNode.delete ();
+			%this.debugNode.delete ();
 		}
 
 		%line.debugRollercoasterType = "node";
 
-		%node.debugNode = %line;
-		%this.debugObjects.add (%line);
+		%this.debugNode = %line;
 	}
 }

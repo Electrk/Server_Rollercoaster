@@ -35,7 +35,7 @@ function RollercoasterNode::onRemove ( %this, %obj )
 	}
 }
 
-function Rollercoaster::pushNode ( %this, %transform, %speed, %type, %path )
+function Rollercoaster::createNode ( %this, %transform, %speed, %type, %path )
 {
 	%overwriteSpeed = %speed !$= "";
 
@@ -79,8 +79,12 @@ function Rollercoaster::pushNode ( %this, %transform, %speed, %type, %path )
 
 	%this.nodes.add (%node);
 
-	%this.drawDebugNode (%node);
-	%this.drawDebugLine (%tail, %node);
+	%node.drawDebugNode ();
+
+	if ( isObject (%tail) )
+	{
+		%tail.drawDebugLine (%node);
+	}
 
 	return %node;
 }

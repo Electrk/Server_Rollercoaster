@@ -10,16 +10,12 @@ if ( !$Rollercoaster::ClassesInitialized )
 
 function Rollercoaster::onAdd ( %this, %obj )
 {
-	%this.nodes        = new SimSet ();
-	%this.trains       = new SimSet ();
-	%this.debugObjects = new SimSet ();
+	%this.nodes  = new SimSet ();
+	%this.trains = new SimSet ();
 }
 
 function Rollercoaster::onRemove ( %this, %obj )
 {
-	%this.debugObjects.deleteAll ();
-	%this.debugObjects.delete ();
-
 	%this.nodes.deleteAll ();
 	%this.nodes.delete ();
 
