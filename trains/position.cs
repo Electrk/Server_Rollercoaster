@@ -1,16 +1,25 @@
-// There's no getState() function for PathCameras so we're going to have to use this instead.
-// Have I mentioned how awful the PathCamera API is??
-function RollercoasterTrain::setTrainState ( %this, %state )
+function RollercoasterTrain::startTrain ( %this )
 {
-	if ( %state !$= "stop"  &&  %state !$= "forward"  &&  %state !$= "backward" )
+	%this.pathCam.setState ("forward");
+	%this.isTrainRunning = true;
+}
+
+function RollercoasterTrain::stopTrain ( %this )
+{
+	%this.pathCam.setState ("stop");
+	%this.isTrainRunning = false;
+}
+
+function RollercoasterTrain::setTrainRunning ( %this, %running )
+{
+	if ( %running )
 	{
-		return false;
+		%this.startTrain ();
 	}
-
-	%this.pathCam.setState (%state);
-	%this.trainState = %state;
-
-	return true;
+	else
+	{
+		%this.stopTrain ();
+	}
 }
 
 function Rollercoaster::setTrainPosition ( %this, %train, %index )
@@ -24,7 +33,7 @@ function Rollercoaster::setTrainPosition ( %this, %train, %index )
 	%train.trainWindowEnd   = mMin (%index + $Rollercoaster::MaxNodes - 1, %maxIndex);
 
 	%train.pathCam.setPosition (1);
-	%train.setTrainState (%train.trainState);
+	%train.setTrainRunning (%train.isTrainRunning);
 }
 
 function Rollercoaster::shiftTrainWindow ( %this, %train )

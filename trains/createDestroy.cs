@@ -95,7 +95,7 @@ function Rollercoaster::createTrain ( %this )
 
 	%train.pathCam = %pathCam;
 
-	%train.setTrainState ("stop");
+	%train.stopTrain ();
 	%this.setTrainPosition (%train, 0);
 
 	return %train;
