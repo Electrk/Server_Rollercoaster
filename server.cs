@@ -11,7 +11,7 @@ exec ("./nodes.cs");
 // Rollercoaster train stuff
 exec ("./trains/createDestroy.cs");
 exec ("./trains/camera.cs");
-exec ("./trains/miscellaneous.cs");
+exec ("./trains/position.cs");
 
 // Debug stuff like drawing shapelines
 exec ("./debug.cs");

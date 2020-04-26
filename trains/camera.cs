@@ -3,25 +3,9 @@ datablock PathCameraData (RollercoasterCamera)
 	placeholder_field_so_tork_doesnt_throw_a_syntax_error = "";
 };
 
-function RollercoasterCamera::onNode ( %data, %this, %node )
+function RollercoasterCamera::onNode ( %data, %this, %nodeIndex )
 {
-	%rollercoaster = %this.rollercoaster;
-	%train         = %this.rollercoasterTrain;
-
-	%nodes = %rollercoaster.nodes;
-	%count = %nodes.getCount ();
-
-	%nodeIndex = %train.currNodeIndex + $Rollercoaster::MaxNodes - 1;
-
-	// PathCameras can only have so many nodes before they start popping nodes from the front,
-	// so we must keep shifting the window.
-	if ( %nodeIndex < %count  &&  %train.currNodeIndex > 0 )
-	{
-		%node = %nodes.getObject (%nodeIndex);
-		%this.pushBack (%node.position SPC %node.rotation, %node.speed, %node.type, %node.path);
-	}
-
-	%train.currNodeIndex++;
+	%this.rollercoaster.shiftTrainWindow (%this.rollercoasterTrain, 1);
 }
 
 function Rollercoaster::pushCameraNodes ( %this, %pathCam, %startIndex )
@@ -29,14 +13,18 @@ function Rollercoaster::pushCameraNodes ( %this, %pathCam, %startIndex )
 	%pathCam.reset ();
 
 	%startIndex = defaultValue (%startIndex, 0);
+	%endIndex   = mMin (%startIndex + $Rollercoaster::MaxNodes, %this.nodes.getCount ());
 
-	%nodes = %this.nodes;
-	%count = %nodes.getCount ();
-	%end   = $Rollercoaster::MaxNodes;
-
-	for ( %i = %startIndex;  %i < %end  &&  %i < %count;  %i++ )
+	for ( %i = %startIndex;  %i < %endIndex;  %i++ )
 	{
-		%node = %nodes.getObject (%i);
-		%pathCam.pushBack (%node.position SPC %node.rotation, %node.speed, %node.type, %node.path);
+		%this.pushCameraNode (%pathCam, %i);
 	}
+}
+
+function Rollercoaster::pushCameraNode ( %this, %pathCam, %nodeIndex )
+{
+	%nodeIndex = mClamp (%nodeIndex, 0, %this.nodes.getCount () - 1);
+	%node      = %this.nodes.getObject (%nodeIndex);
+
+	%pathCam.pushBack (%node.position SPC %node.rotation, %node.speed, %node.type, %node.path);
 }

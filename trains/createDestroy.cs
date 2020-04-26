@@ -76,9 +76,7 @@ function Rollercoaster::createTrain ( %this )
 {
 	%train = new ScriptObject ()
 	{
-		superClass = RollercoasterTrain;
-
-		currNodeIndex = 0;
+		superClass    = RollercoasterTrain;
 		rollercoaster = %this;
 	};
 
@@ -97,8 +95,8 @@ function Rollercoaster::createTrain ( %this )
 
 	%train.pathCam = %pathCam;
 
-	%pathCam.setState ("stop");
-	%this.pushCameraNodes (%pathCam);
+	%train.setTrainState ("stop");
+	%this.setTrainPosition (%train, 0);
 
 	return %train;
 }
