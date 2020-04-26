@@ -22,32 +22,33 @@ function RollercoasterTrain::setTrainRunning ( %this, %running )
 	}
 }
 
-function Rollercoaster::setTrainPosition ( %this, %train, %index )
+function RollercoasterTrain::setTrainPosition ( %this, %index )
 {
-	%maxIndex = %this.nodes.getCount () - 1;
-	%index    = mClamp (%index, 0, %maxIndex);
+	%rollercoaster = %this.rollercoaster;
+	%maxIndex      = %rollercoaster.nodes.getCount () - 1;
+	%index         = mClamp (%index, 0, %maxIndex);
 
-	%this.pushCameraNodes (%train.pathCam, %index);
+	%this.pushCameraNodes (%index);
 
-	%train.trainWindowStart = %index;
-	%train.trainWindowEnd   = mMin (%index + $Rollercoaster::MaxNodes - 1, %maxIndex);
+	%this.trainWindowStart = %index;
+	%this.trainWindowEnd   = mMin (%index + $Rollercoaster::MaxNodes - 1, %maxIndex);
 
-	%train.pathCam.setPosition (1);
-	%train.setTrainRunning (%train.isTrainRunning);
+	%this.pathCam.setPosition (1);
+	%this.setTrainRunning (%this.isTrainRunning);
 }
 
-function Rollercoaster::shiftTrainWindow ( %this, %train )
+function RollercoasterTrain::shiftTrainWindow ( %this )
 {
-	%maxIndex = %this.nodes.getCount () - 1;
+	%maxIndex = %this.rollercoaster.nodes.getCount () - 1;
 
-	if ( %train.trainWindowEnd < %maxIndex )
+	if ( %this.trainWindowEnd < %maxIndex )
 	{
-		%this.pushCameraNode (%train.pathCam, %train.trainWindowEnd + 1);
-		%train.trainWindowEnd++;
+		%this.pushCameraNode (%this.trainWindowEnd + 1);
+		%this.trainWindowEnd++;
 	}
 
-	if ( %train.trainWindowStart < %maxIndex )
+	if ( %this.trainWindowStart < %maxIndex )
 	{
-		%train.trainWindowStart++;
+		%this.trainWindowStart++;
 	}
 }

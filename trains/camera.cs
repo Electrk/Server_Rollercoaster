@@ -5,26 +5,27 @@ datablock PathCameraData (RollercoasterCamera)
 
 function RollercoasterCamera::onNode ( %data, %this, %nodeIndex )
 {
-	%this.rollercoaster.shiftTrainWindow (%this.rollercoasterTrain);
+	%this.rollercoasterTrain.shiftTrainWindow ();
 }
 
-function Rollercoaster::pushCameraNodes ( %this, %pathCam, %startIndex )
+function RollercoasterTrain::pushCameraNodes ( %this, %startIndex )
 {
-	%pathCam.reset ();
+	%this.pathCam.reset ();
 
 	%startIndex = defaultValue (%startIndex, 0);
-	%endIndex   = mMin (%startIndex + $Rollercoaster::MaxNodes, %this.nodes.getCount ());
+	%endIndex   = mMin (%startIndex + $Rollercoaster::MaxNodes, %this.rollercoaster.nodes.getCount ());
 
 	for ( %i = %startIndex;  %i < %endIndex;  %i++ )
 	{
-		%this.pushCameraNode (%pathCam, %i);
+		%this.pushCameraNode (%i);
 	}
 }
 
-function Rollercoaster::pushCameraNode ( %this, %pathCam, %nodeIndex )
+function RollercoasterTrain::pushCameraNode ( %this, %nodeIndex )
 {
-	%nodeIndex = mClamp (%nodeIndex, 0, %this.nodes.getCount () - 1);
-	%node      = %this.nodes.getObject (%nodeIndex);
+	%rollercoaster = %this.rollercoaster;
+	%nodeIndex     = mClamp (%nodeIndex, 0, %rollercoaster.nodes.getCount () - 1);
+	%node          = %rollercoaster.nodes.getObject (%nodeIndex);
 
-	%pathCam.pushBack (%node.position SPC %node.rotation, %node.speed, %node.type, %node.path);
+	%this.pathCam.pushBack (%node.position SPC %node.rotation, %node.speed, %node.type, %node.path);
 }
