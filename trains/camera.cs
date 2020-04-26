@@ -5,7 +5,16 @@ datablock PathCameraData (RollercoasterCamera)
 
 function RollercoasterCamera::onNode ( %data, %this, %nodeIndex )
 {
-	%this.rollercoasterTrain.shiftTrainWindow ();
+	%train = %this.rollercoasterTrain;
+
+	%train.shiftTrainWindow ();
+
+	if ( %train.trainWindowStart >= %this.rollercoaster.nodes.getCount () - 1  &&
+		 %train.resetOnEnd )
+	{
+		%train.stopTrain ();
+		%train.setTrainPosition (0);
+	}
 }
 
 function RollercoasterTrain::pushCameraNodes ( %this, %startIndex )
