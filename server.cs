@@ -12,6 +12,7 @@ exec ("./nodes.cs");
 exec ("./trains/createDestroy.cs");
 exec ("./trains/camera.cs");
 exec ("./trains/position.cs");
+exec ("./trains/riders.cs");
 
 // Debug stuff like drawing shapelines
 exec ("./debug.cs");
