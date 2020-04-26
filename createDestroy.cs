@@ -25,7 +25,7 @@ function Rollercoaster::onRemove ( %this, %obj )
 	%this.trains.delete ();
 }
 
-function Rollercoaster_Create ( %transform, %speed )
+function createRollercoaster ( %transform, %speed )
 {
 	return new ScriptObject ()
 	{
