@@ -5,7 +5,7 @@ datablock PathCameraData (RollercoasterCamera)
 
 function RollercoasterCamera::onNode ( %data, %this, %nodeIndex )
 {
-	%this.rollercoaster.shiftTrainWindow (%this.rollercoasterTrain, 1);
+	%this.rollercoaster.shiftTrainWindow (%this.rollercoasterTrain);
 }
 
 function Rollercoaster::pushCameraNodes ( %this, %pathCam, %startIndex )
