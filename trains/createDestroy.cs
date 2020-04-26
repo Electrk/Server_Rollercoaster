@@ -20,7 +20,7 @@ function RollercoasterTrain::onRemove ( %this, %obj )
 	%this.pathCam.delete ();
 }
 
-function RollercoasterTrain::addRider ( %this, %client, %deleteControlObj )
+function RollercoasterTrain::addRider ( %this, %client )
 {
 	if ( %client.getClassName () !$= "GameConnection" )
 	{
@@ -32,20 +32,11 @@ function RollercoasterTrain::addRider ( %this, %client, %deleteControlObj )
 		return false;
 	}
 
-	%deleteControlObj = defaultValue (%deleteControlObj, true);
-
 	%this.riders.add (%client);
 
-	if ( isObject (%controlObject = %client.getControlObject ()) )
+	if ( isObject (%controlObject = %client.getControlObject ())  &&  %controlObject != %pathCam )
 	{
-		if ( %deleteControlObj )
-		{
-			%controlObject.delete ();
-		}
-		else
-		{
-			%client.rollercoasterPrevObj = %controlObject;
-		}
+		%client.rollercoasterPrevObj = %controlObject;
 	}
 
 	%client.setControlObject (%pathCam);
