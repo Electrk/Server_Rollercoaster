@@ -32,6 +32,8 @@ function RollercoasterTrain::addRider ( %this, %client, %deleteControlObj )
 		return false;
 	}
 
+	%deleteControlObj = defaultValue (%deleteControlObj, true);
+
 	%this.riders.add (%client);
 
 	if ( isObject (%controlObject = %client.getControlObject ()) )
