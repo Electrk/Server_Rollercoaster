@@ -3,6 +3,8 @@ $Rollercoaster::DebugLineSize    = defaultValue ($Rollercoaster::DebugLineSize, 
 $Rollercoaster::DebugLineColor   = defaultValue ($Rollercoaster::DebugLineColor, "1 0 0 0.5");
 $Rollercoaster::DebugVertexColor = defaultValue ($Rollercoaster::DebugVertexColor, "1 1 0 0.5");
 
+// ------------------------------------------------
+
 
 function RollercoasterNode::drawDebugLine ( %this, %toNode )
 {

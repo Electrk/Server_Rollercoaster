@@ -7,6 +7,8 @@ if ( !$Rollercoaster::ClassesInitialized )
 	new ScriptObject () { superClass = Rollercoaster; }.delete ();
 }
 
+// ------------------------------------------------
+
 
 function Rollercoaster::onAdd ( %this, %obj )
 {
