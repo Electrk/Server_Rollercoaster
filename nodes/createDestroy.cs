@@ -85,3 +85,32 @@ function Rollercoaster::createNode ( %this, %transform, %speed, %type, %path )
 
 	return %node;
 }
+
+function Rollercoaster::deleteNode ( %this, %index )
+{
+	%nodes     = %this.nodes;
+	%nodeCount = %nodes.getCount ();
+
+	if ( %index < 0  ||  %index >= %nodeCount )
+	{
+		return false;
+	}
+
+	%lastItem = %nodes.getObject (%nodeCount - 1);
+
+	%node = %nodes.getObject (%index);
+	%nodes.remove (%node);
+
+	if ( %node != %lastItem )
+	{
+		// When an object gets removed from a SimSet, the last item in the SimSet simply just takes
+		// its place.  We need nodes to keep their order, so we have to push it to the back again.
+		//
+		// Big brain problems require big brain solutions.
+
+		%nodes.pushToBack (%lastItem);
+	}
+
+	%node.delete ();
+	%this.resetTrainPaths ();
+}
