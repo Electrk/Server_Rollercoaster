@@ -1,2 +1,4 @@
 Title: First-Person Rollercoasters
 Author: Electrk
+
+Adds functionality for first-person rollercoasters with PathCamera.
