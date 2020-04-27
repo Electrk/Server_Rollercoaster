@@ -3,7 +3,7 @@ function Rollercoaster::setRollercoasterName ( %this, %name )
 	%name       = trim (%name);
 	%objectName = "Rollercoaster_" @ %name;
 
-	if ( (isObject (%objectName)  &&  %objectName != %this)  ||  %name $= "" )
+	if ( (isObject (%objectName)  &&  %objectName.getID () != %this)  ||  %name $= "" )
 	{
 		return $Rollercoaster::Error::NameConflict;
 	}
