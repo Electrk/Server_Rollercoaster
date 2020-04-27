@@ -53,3 +53,38 @@ function RollercoasterNode::drawDebugNode ( %this )
 		%this.debugRCNode = %line;
 	}
 }
+
+function Rollercoaster::drawDebugLine ( %this, %fromIndex, %toIndex )
+{
+	// Only allow drawing lines between adjacent nodes.
+	if ( mAbs (%fromIndex - %toIndex) != 1 )
+	{
+		return;
+	}
+
+	%nodes     = %this.nodes;
+	%nodeCount = %nodes.getCount ();
+
+	if ( %fromIndex < 0  ||  %fromIndex >= %nodeCount  ||  %toIndex < 0  ||  %toIndex >= %nodeCount )
+	{
+		return;
+	}
+
+	%fromNode = %nodes.getObject (%fromIndex);
+	%toNode   = %nodes.getObject (%toIndex);
+
+	%fromNode.drawDebugLine (%toNode);
+}
+
+function Rollercoaster::drawDebugNode ( %this, %index )
+{
+	%nodes     = %this.nodes;
+	%nodeCount = %nodes.getCount ();
+
+	if ( %index < 0  ||  %index >= %nodeCount )
+	{
+		return;
+	}
+
+	%nodes.getObject (%index).drawDebugNode ();
+}
