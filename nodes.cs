@@ -85,3 +85,45 @@ function Rollercoaster::createNode ( %this, %transform, %speed, %type, %path )
 
 	return %node;
 }
+
+function RollercoasterNode::setTransform ( %this, %transform )
+{
+	%position = getWords (%transform, 0, 2);
+
+	%this.position = %position;
+	%this.rotation = getWords (%transform, 3);
+
+	if ( isObject (%this.debugRCNode) )
+	{
+		%this.debugRCNode.setTransform (%position);
+	}
+
+	if ( isObject (%lineFrom = %this.debugRCLineFrom) )
+	{
+		%this.drawDebugLine (%lineFrom.debugRCToNodeSO);
+	}
+
+	if ( isObject (%lineTo = %this.debugRCLineTo) )
+	{
+		%lineTo.debugRCFromNodeSO.drawDebugLine (%this);
+	}
+
+	// Now we have to fix the paths of all the train cameras by rebuilding the entire path since
+	// there's no way of updating PathCamera nodes.
+	//
+	// Have I mentioned how awful the PathCamera API is???
+	//
+	// (You shouldn't be needing to use this method much if at all anyway)
+
+	%trains     = %this.rollercoaster.trains;
+	%trainCount = %trains.getCount ();
+
+	for ( %i = 0;  %i < %trainCount;  %i++ )
+	{
+		%train         = %trains.getObject (%i);
+		%trainPosition = %train.trainWindowStart;
+
+		%train.pushCameraNodes (%trainPosition);
+		%train.setTrainPosition (%trainPosition);
+	}
+}
