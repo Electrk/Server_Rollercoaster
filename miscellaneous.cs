@@ -1,22 +1,17 @@
 function Rollercoaster::setRollercoasterName ( %this, %name )
 {
-	if ( !isObject (RollercoasterSet) )
-	{
-		return $Rollercoaster::Error::NoSimSet;
-	}
-
 	%name       = trim (%name);
-	%objectName = "RollercoasterTrack_" @ %name;
+	%objectName = "Rollercoaster_" @ %name;
 
-	if ( isObject (%objectName)  ||  %name $= "" )
+	if ( (isObject (%objectName)  &&  %objectName != %this)  ||  %name $= "" )
 	{
 		return $Rollercoaster::Error::NameConflict;
 	}
 
 	%this.setName (%objectName);
-	%this.displayName = %name;
+	%this.rollercoasterName = %name;
 
-	return %rollercoaster;
+	return $Rollercoaster::Error::None;
 }
 
 package Server_Rollercoaster

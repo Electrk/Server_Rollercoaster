@@ -30,7 +30,7 @@ function createRollercoaster ( %name, %transform, %speed )
 	}
 
 	%name       = trim (%name);
-	%objectName = "RollercoasterTrack_" @ %name;
+	%objectName = "Rollercoaster_" @ %name;
 
 	if ( isObject (%objectName)  ||  %name $= "" )
 	{
@@ -44,7 +44,7 @@ function createRollercoaster ( %name, %transform, %speed )
 		transform    = defaultValue (%transform, $Rollercoaster::Default::Transform);
 		initialSpeed = defaultValue (%speed, $Rollercoaster::Default::Speed);
 
-		displayName = %name;
+		rollercoasterName = %name;
 	};
 
 	RollercoasterSet.add (%rollercoaster);
