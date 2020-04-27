@@ -14,19 +14,19 @@ function RollercoasterNode::onAdd ( %this, %obj )
 
 function RollercoasterNode::onRemove ( %this, %obj )
 {
-	if ( isObject (%this.debugLineFrom) )
+	if ( isObject (%this.debugRCLineFrom) )
 	{
-		%this.debugLineFrom.delete ();
+		%this.debugRCLineFrom.delete ();
 	}
 
-	if ( isObject (%this.debugLineTo) )
+	if ( isObject (%this.debugRCLineTo) )
 	{
-		%this.debugLineTo.delete ();
+		%this.debugRCLineTo.delete ();
 	}
 
-	if ( isObject (%this.debugNode) )
+	if ( isObject (%this.debugRCNode) )
 	{
-		%this.debugNode.delete ();
+		%this.debugRCNode.delete ();
 	}
 }
 
@@ -70,6 +70,8 @@ function Rollercoaster::createNode ( %this, %transform, %speed, %type, %path )
 		speed = defaultValue (%speed, $Rollercoaster::Default::Speed);
 		type  = defaultValue (%type, $Rollercoaster::Default::NodeType);
 		path  = defaultValue (%path, $Rollercoaster::Default::NodePath);
+
+		rollercoaster = %this;
 	};
 
 	%this.nodes.add (%node);

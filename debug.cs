@@ -10,20 +10,22 @@ function RollercoasterNode::drawDebugLine ( %this, %toNode )
 		%line = drawLine (%this.position, %toNode.position, $Rollercoaster::DebugLineColor,
 			$Rollercoaster::DebugLineSize);
 
-		if ( isObject (%this.debugLineFrom) )
+		if ( isObject (%this.debugRCLineFrom) )
 		{
-			%this.debugLineFrom.delete ();
+			%this.debugRCLineFrom.delete ();
 		}
 
-		if ( isObject (%toNode.debugLineTo) )
+		if ( isObject (%toNode.debugRCLineTo) )
 		{
-			%toNode.debugLineTo.delete ();
+			%toNode.debugRCLineTo.delete ();
 		}
 
-		%line.debugRollercoasterType = "line";
+		%line.debugRCType       = "line";
+		%line.debugRCFromNodeSO = %this;
+		%line.debugRCToNodeSO   = %toNode;
 
-		%this.debugLineFrom = %line;
-		%toNode.debugLineTo = %line;
+		%this.debugRCLineFrom = %line;
+		%toNode.debugRCLineTo = %line;
 	}
 
 	return $Rollercoaster::Error::None;
@@ -40,13 +42,14 @@ function RollercoasterNode::drawDebugNode ( %this )
 
 		%line = drawLine (%fromPos, %toPos, $Rollercoaster::DebugVertexColor, %size);
 
-		if ( isObject (%this.debugNode) )
+		if ( isObject (%this.debugRCNode) )
 		{
-			%this.debugNode.delete ();
+			%this.debugRCNode.delete ();
 		}
 
-		%line.debugRollercoasterType = "node";
+		%line.debugRCType   = "node";
+		%line.debugRCNodeSO = %this;
 
-		%this.debugNode = %line;
+		%this.debugRCNode = %line;
 	}
 }
