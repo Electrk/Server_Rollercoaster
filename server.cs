@@ -11,8 +11,10 @@ exec ("./config.cs");
 // Constructor + destructor
 exec ("./createDestroy.cs");
 
-// Track camera nodes
-exec ("./nodes.cs");
+// Rollercoaster pathcam node stuff
+exec ("./nodes/createDestroy.cs");
+exec ("./nodes/transform.cs");
+exec ("./nodes/debug.cs");
 
 // Rollercoaster train stuff
 exec ("./trains/createDestroy.cs");
@@ -23,7 +25,5 @@ exec ("./trains/riders.cs");
 // Miscellaneous stuff
 exec ("./miscellaneous.cs");
 
-// Debug stuff like drawing shapelines
-exec ("./debug.cs");
 
 $Rollercoaster::ClassesInitialized = true;
