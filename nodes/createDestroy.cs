@@ -112,5 +112,21 @@ function Rollercoaster::deleteNode ( %this, %index )
 	}
 
 	%node.delete ();
+
+	%nodeCount = %nodes.getCount ();
+
+	if ( %index < %nodeCount )
+	{
+		if ( %index > 0 )
+		{
+			%this.drawDebugLine (%index - 1, %index);
+		}
+
+		if ( %index < %nodeCount - 1 )
+		{
+			%this.drawDebugLine (%index, %index + 1);
+		}
+	}
+
 	%this.resetTrainPaths ();
 }
