@@ -37,27 +37,16 @@ function Rollercoaster::createNode ( %this, %transform, %speed, %type, %path )
 	%nodes     = %this.nodes;
 	%nodeCount = %nodes.getCount ();
 
-	%tail    = 0;
-	%prevPos = "";
+	%tail = 0;
 
 	if ( %nodeCount > 0 )
 	{
-		%tail    = %nodes.getObject (%nodeCount - 1);
-		%speed   = defaultValue (%speed, %tail.speed);
-		%prevPos = %tail.position;
+		%tail = %nodes.getObject (%nodeCount - 1);
 	}
 
-	%speed = defaultValue (%speed, %this.initialSpeed);
-
-	if ( %prevPos !$= "" )
+	if ( !%overwriteSpeed )
 	{
-		%prevZ = getWord (%prevPos, 2);
-		%newZ  = getWord (%transform, 2);
-
-		if ( !%overwriteSpeed )
-		{
-			%speed += %prevZ - %newZ;
-		}
+		%speed = %this.calculateNodeSpeed (%transform, %speed, %type, %path);
 	}
 
 	%node = new ScriptObject ()
@@ -129,4 +118,30 @@ function Rollercoaster::deleteNode ( %this, %index )
 	}
 
 	%this.resetTrainPaths ();
+}
+
+function Rollercoaster::calculateNodeSpeed ( %this, %transform, %speed, %type, %path )
+{
+	%nodes     = %this.nodes;
+	%nodeCount = %nodes.getCount ();
+
+	%tail = 0;
+
+	if ( %nodeCount > 0 )
+	{
+		%tail  = %nodes.getObject (%nodeCount - 1);
+		%speed = defaultValue (%speed, %tail.speed);
+	}
+
+	%speed = defaultValue (%speed, %this.initialSpeed);
+
+	if ( isObject (%tail) )
+	{
+		%prevZ = getWord (%tail.position, 2);
+		%newZ  = getWord (%transform, 2);
+
+		%speed += %prevZ - %newZ;
+	}
+
+	return %speed;
 }
