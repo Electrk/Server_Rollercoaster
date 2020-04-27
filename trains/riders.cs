@@ -2,31 +2,26 @@ function RollercoasterTrain::addRider ( %this, %client )
 {
 	if ( %client.getClassName () !$= "GameConnection" )
 	{
-		return false;
-	}
-
-	if ( !isObject (%pathCam = %this.pathCam) )
-	{
-		return false;
+		return $Rollercoaster::Error::InvalidClassName;
 	}
 
 	%this.riders.add (%client);
 
-	if ( isObject (%controlObject = %client.getControlObject ())  &&  %controlObject != %pathCam )
+	if ( isObject (%controlObject = %client.getControlObject ())  &&  %controlObject != %this.pathCam )
 	{
 		%client.rollercoasterPrevObj = %controlObject;
 	}
 
-	%client.setControlObject (%pathCam);
+	%client.setControlObject (%this.pathCam);
 
-	return true;
+	return $Rollercoaster::Error::None;
 }
 
 function RollercoasterTrain::removeRider ( %this, %client )
 {
 	if ( !%this.riders.isMember (%client) )
 	{
-		return false;
+		return;
 	}
 
 	%this.riders.remove (%client);
@@ -41,8 +36,6 @@ function RollercoasterTrain::removeRider ( %this, %client )
 	}
 
 	%client.rollercoasterPrevObj = "";
-
-	return true;
 }
 
 function RollercoasterTrain::removeAllRiders ( %this )

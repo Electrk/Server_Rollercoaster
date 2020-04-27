@@ -1,8 +1,3 @@
-$Rollercoaster::Default::NodeType = "Normal";
-$Rollercoaster::Default::NodePath = "Linear";
-
-$Rollercoaster::MaxNodes = 18;
-
 if ( !$Rollercoaster::ClassesInitialized )
 {
 	// Assert RollercoasterNode as a superClass.

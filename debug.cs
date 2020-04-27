@@ -1,16 +1,8 @@
-$Rollercoaster::DebugMode        = defaultValue ($Rollercoaster::DebugMode, true);
-$Rollercoaster::DebugLineSize    = defaultValue ($Rollercoaster::DebugLineSize, 0.1);
-$Rollercoaster::DebugLineColor   = defaultValue ($Rollercoaster::DebugLineColor, "1 0 0 0.5");
-$Rollercoaster::DebugVertexColor = defaultValue ($Rollercoaster::DebugVertexColor, "1 1 0 0.5");
-
-// ------------------------------------------------
-
-
 function RollercoasterNode::drawDebugLine ( %this, %toNode )
 {
 	if ( !isObject (%toNode) )
 	{
-		return;
+		return $Rollercoaster::Error::ObjectNotExist;
 	}
 
 	if ( $Rollercoaster::DebugMode )
@@ -33,6 +25,8 @@ function RollercoasterNode::drawDebugLine ( %this, %toNode )
 		%this.debugLineFrom = %line;
 		%toNode.debugLineTo = %line;
 	}
+
+	return $Rollercoaster::Error::None;
 }
 
 function RollercoasterNode::drawDebugNode ( %this )
