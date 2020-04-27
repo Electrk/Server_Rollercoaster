@@ -72,6 +72,20 @@ function RollercoasterTrain::shiftTrainWindow ( %this )
 	}
 }
 
+function Rollercoaster::resetTrainPaths ( %this )
+{
+	%trains     = %this.trains;
+	%trainCount = %trains.getCount ();
+
+	for ( %i = 0;  %i < %trainCount;  %i++ )
+	{
+		%train = %trains.getObject (%i);
+
+		%train.pushCameraNodes (0);
+		%train.setTrainPosition (0);
+	}
+}
+
 function RollercoasterTrain::onTrainBegin ( %this )
 {
 	// Callback
