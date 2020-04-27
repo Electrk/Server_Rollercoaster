@@ -1,6 +1,3 @@
-$Rollercoaster::Default::Transform = "0 0 0 1 0 0 90";
-$Rollercoaster::Default::Speed     = 2;
-
 if ( !$Rollercoaster::ClassesInitialized )
 {
 	// Assert Rollercoaster as a superClass.
@@ -25,13 +22,32 @@ function Rollercoaster::onRemove ( %this, %obj )
 	%this.trains.delete ();
 }
 
-function createRollercoaster ( %transform, %speed )
+function createRollercoaster ( %name, %transform, %speed )
 {
-	return new ScriptObject ()
+	if ( !isObject (RollercoasterSet) )
+	{
+		return $Rollercoaster::Error::NoSimSet;
+	}
+
+	%name       = trim (%name);
+	%objectName = "RollercoasterTrack_" @ %name;
+
+	if ( isObject (%objectName)  ||  %name $= "" )
+	{
+		return $Rollercoaster::Error::NameConflict;
+	}
+
+	%rollercoaster = new ScriptObject (%objectName)
 	{
 		superClass = Rollercoaster;
 
 		transform    = defaultValue (%transform, $Rollercoaster::Default::Transform);
 		initialSpeed = defaultValue (%speed, $Rollercoaster::Default::Speed);
+
+		displayName = %name;
 	};
+
+	RollercoasterSet.add (%rollercoaster);
+
+	return %rollercoaster;
 }
