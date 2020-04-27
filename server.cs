@@ -13,7 +13,7 @@ exec ("./createDestroy.cs");
 
 // Rollercoaster pathcam node stuff
 exec ("./nodes/createDestroy.cs");
-exec ("./nodes/transform.cs");
+exec ("./nodes/update.cs");
 exec ("./nodes/debug.cs");
 
 // Rollercoaster train stuff

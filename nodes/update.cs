@@ -32,3 +32,12 @@ function RollercoasterNode::setTransform ( %this, %transform )
 
 	%this.rollercoaster.resetTrainPaths ();
 }
+
+function RollercoasterNode::updateProperties ( %this, %speed, %type, %path )
+{
+	%this.speed = defaultValue (%speed, %this.speed);
+	%this.type  = defaultValue (%type, %this.type);
+	%this.path  = defaultValue (%path, %this.path);
+
+	%this.rollercoaster.resetTrainPaths ();
+}
