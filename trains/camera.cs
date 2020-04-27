@@ -9,11 +9,15 @@ function RollercoasterCamera::onNode ( %data, %this, %nodeIndex )
 
 	%train.shiftTrainWindow ();
 
-	if ( %train.trainWindowStart >= %this.rollercoaster.nodes.getCount () - 1  &&
-		 %train.resetOnEnd )
+	if ( %train.trainWindowStart >= %this.rollercoaster.nodes.getCount () - 1 )
 	{
-		%train.stopTrain ();
-		%train.setTrainPosition (0);
+		if ( %train.resetOnEnd )
+		{
+			%train.stopTrain ();
+			%train.setTrainPosition (0);
+		}
+
+		%train.onTrainReachEnd ();
 	}
 }
 
