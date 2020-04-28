@@ -22,19 +22,24 @@ function Rollercoaster::onRemove ( %this, %obj )
 	%this.trains.delete ();
 }
 
-function createRollercoaster ( %name, %transform, %speed )
+function createRollercoaster ( %transform, %initialSpeed, %name )
 {
 	if ( !isObject (RollercoasterSet) )
 	{
 		return $Rollercoaster::Error::NoSimSet;
 	}
-
+ 
 	%name       = trim (%name);
-	%objectName = "Rollercoaster_" @ %name;
+	%objectName = "";
 
-	if ( isObject (%objectName)  ||  %name $= "" )
+	if ( %name !$= "" )
 	{
-		return $Rollercoaster::Error::NameConflict;
+		%objectName = "Rollercoaster_" @ %name;
+
+		if ( isObject (%objectName) )
+		{
+			return $Rollercoaster::Error::NameConflict;
+		}
 	}
 
 	%rollercoaster = new ScriptObject (%objectName)
@@ -42,7 +47,7 @@ function createRollercoaster ( %name, %transform, %speed )
 		superClass = Rollercoaster;
 
 		transform    = defaultValue (%transform, $Rollercoaster::Default::Transform);
-		initialSpeed = defaultValue (%speed, $Rollercoaster::Default::Speed);
+		initialSpeed = defaultValue (%initialSpeed, $Rollercoaster::Default::Speed);
 
 		rollercoasterName = %name;
 	};
