@@ -34,7 +34,7 @@ function createRollercoaster ( %transform, %initialSpeed, %name )
 
 	if ( %name !$= "" )
 	{
-		%objectName = "Rollercoaster_" @ %name;
+		%objectName = "RollercoasterTrack_" @ %name;
 
 		if ( isObject (%objectName) )
 		{
