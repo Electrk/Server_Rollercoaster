@@ -50,3 +50,20 @@ function Rollercoaster::createTrain ( %this, %resetOnEnd )
 
 	return %train;
 }
+
+function Rollercoaster::deleteTrain ( %this, %index )
+{
+	%trains = %this.trains;
+
+	if ( %index < 0  ||  %index >= %trains.getCount () )
+	{
+		return;
+	}
+
+	%trains.getObject (%index).delete ();
+}
+
+function Rollercoaster::deleteAllTrains ( %this )
+{
+	%this.trains.deleteAll ();
+}
