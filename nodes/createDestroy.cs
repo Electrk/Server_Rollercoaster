@@ -120,6 +120,22 @@ function Rollercoaster::deleteNode ( %this, %index )
 	%this.resetTrainPaths ();
 }
 
+function Rollercoaster::deleteAllNodes ( %this )
+{
+	%this.nodes.deleteAll ();
+
+	%trains     = %this.trains;
+	%trainCount = %trains.getCount ();
+
+	for ( %i = 0;  %i < %trainCount;  %i++ )
+	{
+		%train = %trains.getObject (%i);
+
+		%train.pathCam.reset ();
+		%train.setTrainPosition (0);
+	}
+}
+
 function Rollercoaster::calculateNodeSpeed ( %this, %transform, %speed, %type, %path )
 {
 	%nodes     = %this.nodes;
